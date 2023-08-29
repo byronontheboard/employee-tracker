@@ -1,16 +1,18 @@
-const express = require('express');
-const app = express();
+import inquirer from 'inquirer';
+
 const port = 3000;
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-// Route
-app.get('/', (req, res) => {
-    res.send('Hello, World!');
-});
-  
-// Starting the server up
-app.listen(port, () => {
-    console.log(`Server is listening at http://localhost:${port}`);
-});
+inquirer
+  .prompt([
+    /* Pass questions in here */
+  ])
+  .then((answers) => {
+    // Use for user feedback
+  })
+  .catch((error) => {
+    if (error.isTtyError) {
+      // Prompt couldn't be rendered in the current environment
+    } else {
+      // Something else went wrong
+    }
+  });
