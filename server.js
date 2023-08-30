@@ -122,6 +122,61 @@ const addEmployee = async () => {
   console.log('Employee added successfully!');
 };
 
+// Update an employee function
+const updateEmployee = async () => {
+    // Fetch the list of employees from the database
+    const [employees] = await connection.query('SELECT id, first_name, last_name FROM employees');
+    
+    // Prompt the user to select an employee to update
+    const employeeToUpdate = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'employeeId',
+        message: 'Select an employee to update:',
+        choices: employees.map(employee => ({
+          name: `${employee.first_name} ${employee.last_name}`,
+          value: employee.id
+        }))
+      }
+    ]);
+  
+    // Fetch the employee's current data from the database
+    const [currentEmployee] = await connection.query('SELECT * FROM employees WHERE id = ?', [employeeToUpdate.employeeId]);
+  
+    // Prompt the user to update employee's attributes
+    const updatedEmployee = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'first_name',
+            message: 'Enter the updated first name:',
+            default: currentEmployee[0].first_name
+        },
+        {
+            type: 'input',
+            name: 'last_name',
+            message: 'Enter the updated last name:',
+            default: currentEmployee[0].last_name
+        },
+        {
+            type: 'input',
+            name: 'role_id',
+            message: 'Enter the updated role ID:',
+            default: currentEmployee[0].role_id
+        },
+    ]);
+  
+    // Update the employee's data in the database
+    await connection.query('UPDATE employees SET first_name = ?, last_name = ?, role_id = ? WHERE id = ?', [
+        updatedEmployee.first_name,
+        updatedEmployee.last_name,
+        updatedEmployee.role_id,
+        employeeToUpdate.employeeId
+    ]);
+  
+    console.log('Employee updated successfully!');
+};
+  
+
 // Exit the application
 const exitApp = async () => {
     console.log('Exiting the application...');

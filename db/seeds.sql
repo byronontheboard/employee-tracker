@@ -53,5 +53,5 @@ VALUES
 ("Boxed", "Chocolate", 6, 3),
 
 -- department_id: 4(Sales)
-("Lietenant", "Dan" 7, 4),
+("Lieutenant", "Dan" 7, 4),
 ("John", "Lennon", 8, 4),
