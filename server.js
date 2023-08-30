@@ -282,7 +282,7 @@ const deleteEmployee = async () => {
 const updateEmployee = async () => {
     // Fetch the list of employees from the database
     const [employees] = await connection.query('SELECT id, first_name, last_name FROM employees');
-    
+
     // Prompt the user to select an employee to update
     const employeeToUpdate = await inquirer.prompt([
         {
@@ -319,17 +319,41 @@ const updateEmployee = async () => {
             message: 'Enter the updated role ID:',
             default: currentEmployee[0].role_id,
         },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'Enter the updated salary:',
+            default: currentEmployee[0].salary,
+        },
     ]);
   
     // Update the employee's data in the database
-    await connection.query('UPDATE employees SET first_name = ?, last_name = ?, role_id = ? WHERE id = ?', [
+    await connection.query('UPDATE employees SET first_name = ?, last_name = ?, role_id = ?, salary = ? WHERE id = ?', [
         updatedEmployee.first_name,
         updatedEmployee.last_name,
         updatedEmployee.role_id,
+        updatedEmployee.salary,
         employeeToUpdate.employeeId,
     ]);
-        console.log('Employee updated successfully!');
+    console.log('Employee updated successfully!');
+
+    // Prompt the user for further action
+    const { action } = await inquirer.prompt([
+        {
+            type: 'list',
+            name: 'action',
+            message: 'What would you like to do next?',
+            choices: ['Update another employee', 'Exit'],
+        },
+    ]);
+
+    // Handle user's choice
+    if (action === 'Update another employee') {
+        updateEmployee();
+    } else {
         startApp();
+    }
+
 };
 
 // Exit the application
