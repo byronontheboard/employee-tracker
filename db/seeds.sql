@@ -28,7 +28,7 @@ VALUES
 
 -- role_id: 5
     -- manager_id: 3
-("Account Manager", 160000, 2)
+("Account Manager", 160000, 2),
 -- role_id: 6
 ("Accountant", 125000, 2),
 
@@ -45,7 +45,7 @@ VALUES
 ("Bubba", "Buford", 2, 1),
 
 -- department_id: 2(Finance)
-("John", "Kennedy", 3, 2);
+("John", "Kennedy", 3, 2),
 ("Elvis", "Presley", 4, 2),
 
 -- department_id: 3(Legal)
@@ -53,5 +53,5 @@ VALUES
 ("Boxed", "Chocolate", 6, 3),
 
 -- department_id: 4(Sales)
-("Lieutenant", "Dan" 7, 4),
-("John", "Lennon", 8, 4),
+("Lieutenant", "Dan", 7, 4),
+("John", "Lennon", 8, 4);
