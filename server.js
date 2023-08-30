@@ -1,17 +1,27 @@
-import inquirer from 'inquirer';
-import mysql from 'mysql2/promise';
+const inquirer = require('inquirer');
+const mysql = require('mysql2');
 
-const connection = await mysql.createConnection(
+// Create a connection to the database
+const connection = mysql.createConnection(
     {
         host: 'localhost',
         user: 'root',
         password: '',
-        database: 'employeeTracker_db'
+        database: 'employeeTracker_db',
     }
 );
+  
+// Connect to the database
+connection.connect((err) => {
+if (err) {
+    console.error('Error connecting to database:', err);
+    return;
+}
+console.log('Connected to database');
+});
 
 const startApp = async () => {
-    const action = await inquirer.prompt([
+    inquirer.prompt([
         {
             type: 'list',
             name: 'action',
@@ -27,37 +37,36 @@ const startApp = async () => {
                 'Exit'
             ]
         }
-    ]);
-
-    switch (action.action) {
-        case 'View all departments':
-            await viewAllDepartments();
+    ])
+    .then((res) => {
+        let action = res.action;
+        switch (action) {
+            case 'View all departments':
+                viewAllDepartments();
                 break;
-        case 'View all roles':
-            await viewAllRoles();
+            case 'View all roles':
+                viewAllRoles();
                 break;
-        case 'View all employees':
-            await viewAllEmployees();
+            case 'View all employees':
+                viewAllEmployees();
                 break;
-        case 'Add a department':
-            await addDepartment();
+            case 'Add a department':
+                addDepartment();
                 break;
-        case 'Add a role':
-            await addRole();
+            case 'Add a role':
+                addRole();
                 break;
-        case 'Add an employee':
-            await addEmployee();
+            case 'Add an employee':
+                addEmployee();
                 break;
-        case 'Update an employee':
-            await updateEmployee();
+            case 'Update an employee':
+                updateEmployee();
                 break;
-        case 'Exit':
-            await exitApp();
-            // connection.end();
+            case 'Exit':
+                exitApp();
                 return;
-    }
-
-    startApp();
+        }
+    });
 };
 
 // Viewing functions
@@ -129,15 +138,15 @@ const updateEmployee = async () => {
     
     // Prompt the user to select an employee to update
     const employeeToUpdate = await inquirer.prompt([
-      {
-        type: 'list',
-        name: 'employeeId',
-        message: 'Select an employee to update:',
-        choices: employees.map(employee => ({
-          name: `${employee.first_name} ${employee.last_name}`,
-          value: employee.id
-        }))
-      }
+        {
+            type: 'list',
+            name: 'employeeId',
+            message: 'Select an employee to update:',
+            choices: employees.map((employee) => ({
+                name: `${employee.first_name} ${employee.last_name}`,
+                value: employee.id,
+            })),
+        },
     ]);
   
     // Fetch the employee's current data from the database
@@ -149,19 +158,19 @@ const updateEmployee = async () => {
             type: 'input',
             name: 'first_name',
             message: 'Enter the updated first name:',
-            default: currentEmployee[0].first_name
+            default: currentEmployee[0].first_name,
         },
         {
             type: 'input',
             name: 'last_name',
             message: 'Enter the updated last name:',
-            default: currentEmployee[0].last_name
+            default: currentEmployee[0].last_name,
         },
         {
             type: 'input',
             name: 'role_id',
             message: 'Enter the updated role ID:',
-            default: currentEmployee[0].role_id
+            default: currentEmployee[0].role_id,
         },
     ]);
   
@@ -170,7 +179,7 @@ const updateEmployee = async () => {
         updatedEmployee.first_name,
         updatedEmployee.last_name,
         updatedEmployee.role_id,
-        employeeToUpdate.employeeId
+        employeeToUpdate.employeeId,
     ]);
   
     console.log('Employee updated successfully!');
