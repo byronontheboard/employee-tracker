@@ -29,7 +29,7 @@ const startApp = async () => {
                 'Delete a department',
                 'Delete a role',
                 'Delete an employee',
-                'Update an employee role',
+                'Update an employee',
                 'Exit'
             ]
         }
@@ -298,6 +298,7 @@ const updateEmployee = async () => {
   
     // Fetch the employee's current data from the database
     const [currentEmployee] = await connection.query('SELECT * FROM employees WHERE id = ?', [employeeToUpdate.employeeId]);
+    console.log(currentEmployee);
   
     // Prompt the user to update employee's attributes
     const updatedEmployee = await inquirer.prompt([
@@ -321,18 +322,18 @@ const updateEmployee = async () => {
         },
         {
             type: 'input',
-            name: 'salary',
-            message: 'Enter the updated salary:',
-            default: currentEmployee[0].salary,
+            name: 'manager_id',
+            message: 'Enter the updated manager ID:',
+            default: currentEmployee[0].manager_id,
         },
     ]);
   
     // Update the employee's data in the database
-    await connection.query('UPDATE employees SET first_name = ?, last_name = ?, role_id = ?, salary = ? WHERE id = ?', [
+    await connection.query('UPDATE employees SET first_name = ?, last_name = ?, role_id = ?, manager_id = ? WHERE id = ?', [
         updatedEmployee.first_name,
         updatedEmployee.last_name,
         updatedEmployee.role_id,
-        updatedEmployee.salary,
+        updatedEmployee.manager_id,
         employeeToUpdate.employeeId,
     ]);
     console.log('Employee updated successfully!');
@@ -367,3 +368,4 @@ const exitApp = async () => {
 startApp().catch((error) => {
     console.error('An error occurred:', error);
 });
+
