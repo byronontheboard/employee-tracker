@@ -38,20 +38,20 @@ VALUES
 -- role_id: 8
 ("Lawyer", 190000, 3);
 
-INSERT INTO employees (first_name, last_name, role_id, manager_id)
+INSERT INTO employees (first_name, last_name, salary, role_id, manager_id)
 VALUES
 -- department_id: 1(Engineering)
-("Forrest", "Gump", 1, 1),
-("Bubba", "Buford", 2, 1),
+("Forrest", "Gump", 100000, 1, 1),
+("Bubba", "Buford", 80000, 2, 1),
 
 -- department_id: 2(Finance)
-("John", "Kennedy", 3, 2),
-("Elvis", "Presley", 4, 2),
+("John", "Kennedy", 150000, 3, 2),
+("Elvis", "Presley", 120000, 4, 2),
 
 -- department_id: 3(Legal)
-("Jenny", "Curran", 5, 3),
-("Boxed", "Chocolate", 6, 3),
+("Jenny", "Curran", 160000, 5, 3),
+("Boxed", "Chocolate", 125000, 6, 3),
 
 -- department_id: 4(Sales)
-("Lieutenant", "Dan", 7, 4),
-("John", "Lennon", 8, 4);
+("Lieutenant", "Dan", 250000, 7, 4),
+("John", "Lennon", 190000, 8, 4);

@@ -316,6 +316,12 @@ const updateEmployee = async () => {
         },
         {
             type: 'input',
+            name: 'salary',
+            message: 'Enter the updated salary:',
+            default: currentEmployee[0].salary,
+        },
+        {
+            type: 'input',
             name: 'role_id',
             message: 'Enter the updated role ID:',
             default: currentEmployee[0].role_id,
@@ -329,9 +335,10 @@ const updateEmployee = async () => {
     ]);
   
     // Update the employee's data in the database
-    await connection.query('UPDATE employees SET first_name = ?, last_name = ?, role_id = ?, manager_id = ? WHERE id = ?', [
+    await connection.query('UPDATE employees SET first_name = ?, last_name = ?, salary = ?, role_id = ?, manager_id = ? WHERE id = ?', [
         updatedEmployee.first_name,
         updatedEmployee.last_name,
+        updatedEmployee.salary,
         updatedEmployee.role_id,
         updatedEmployee.manager_id,
         employeeToUpdate.employeeId,
