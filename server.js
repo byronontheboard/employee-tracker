@@ -170,14 +170,20 @@ const addEmployee = async () => {
             name: 'manager_id',
             message: 'Enter the manager ID for the employee:'
         },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'Enter the salary for the employee:'
+        },
     ]);
 
-    await connection.query('INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', 
+    await connection.query('INSERT INTO employees (first_name, last_name, role_id, manager_id, salary) VALUES (?, ?, ?, ?, ?)', 
     [
         employee.first_name,
         employee.last_name,
         employee.role_id,
         employee.manager_id,
+        employee.salary,
 
     ]);
         console.log('Employee added successfully!');
