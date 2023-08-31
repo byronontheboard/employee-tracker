@@ -36,4 +36,8 @@ WHEN I choose to update an employee role,
 
 ----
 ### Using the Application
+https://github.com/byronontheboard/employee-tracker/assets/127366720/e2b9585f-7539-418b-b15d-352746bfcc72
 
+----
+### Credits
+[Byron Thomas](https://github.com/byronontheboard)
